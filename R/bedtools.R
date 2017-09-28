@@ -107,6 +107,3 @@ bedtools <- function(action="intersect",args="-wo",a,b,acols=NA,bcols=NA,ahead=F
     }
   }
 }
-
-
-
