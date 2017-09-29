@@ -2,7 +2,7 @@
 
 rbind.phan <- function(mat_list, coln=NULL) {
   #checks if the columns are the same length
-  if (length(unique(lapply(lapply(mat_list, colnames),function(x) {length(x)})))) != 1) {
+  if (length(unique(lapply(lapply(mat_list, colnames),function(x) {length(x)}))) != 1) {
     stop("The objects passed do not have the same number of columns")
   }
   
@@ -20,8 +20,9 @@ rbind.phan <- function(mat_list, coln=NULL) {
   else{
     if (length(unique(lapply(mat_list, colnames))) != 1) {
       print("The list's columns do not have the same name. Rbinding with colnames from 1st object")
+      coln <- colnames(mat_list[[1]])
+      mat_list <- lapply(mat_list,function(x) { colnames(x) <- coln; return(x) })
     }
-    coln <- colnames(mat_list[[1]])
     df <- do.call(rbind, mat_list)
     colnames(df) <- coln
     return(df)
