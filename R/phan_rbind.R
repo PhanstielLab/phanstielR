@@ -2,7 +2,7 @@
 
 rbind.phan <- function(mat_list, coln=NULL) {
   #checks if the columns are the same length
-  if (length(unique(lapply(lapply(mat_list, colnames),function(x) {length(x)})))) != 1) {
+  if (length(unique(lapply(lapply(mat_list, colnames),function(x) {length(x)}))) != 1) {
     stop("The objects passed do not have the same number of columns")
   }
   
