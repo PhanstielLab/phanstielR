@@ -1,4 +1,4 @@
-#' performs bedtools intersections
+#' Quick & Easy Rbind
 #' 
 #' A new R bind function that will bind together a list of dataframes or matrices
 #'
