@@ -28,7 +28,9 @@ bedtools <- function(action="intersect",args="-wo",a,b,acols=NA,bcols=NA,ahead=F
     if (file.exists(cfile)){file.remove(cfile)}
   }
   
-   options(scipen=999) 
+  # set scipen
+  scipen.atstart = getOption("scipen")
+  options(scipen=999) 
   
   # file names
   afile = paste(tmpdir,"tmpa.bed",sep="")
@@ -45,6 +47,7 @@ bedtools <- function(action="intersect",args="-wo",a,b,acols=NA,bcols=NA,ahead=F
     b = read.table(b,header=bhead,sep = "\t")
   } 
   
+  # filter columns
   if (is.na(acols)==FALSE)
   {
     a = a[,acols]
@@ -78,31 +81,50 @@ bedtools <- function(action="intersect",args="-wo",a,b,acols=NA,bcols=NA,ahead=F
   
   if (test == TRUE)
   {
+    # just print the command without lanuching if in test mode
     print (cmd)
   }
   if (test == FALSE)
   {
+    # launch the actual command
     system(cmd)
     
+    # determine size of output file
     info = file.info(cfile)
+    
+    # handle empty output file
     if (info$size == 0)
     {
+      # reset scipen to intial state
+      options(scipen=scipen.atstart) 
+      
+      # delete temp files
+      deletethefiles()
+      
       if (count == TRUE)
       {
-        deletethefiles()
         return (0)
       }
-      deletethefiles()
       return(c())
     }
+    
     if (info$size > 0)
     {
       res = read.table(cfile,header=F,sep="\t")
+
+      # reset scipen to intial state
+      options(scipen=scipen.atstart) 
+      
+      # delete temp files
       deletethefiles()
+      
+      # return number of rows
       if (count == TRUE)
       {
         return (nrow(res))
       }
+      
+      # return actual data
       return (res)
     }
   }
