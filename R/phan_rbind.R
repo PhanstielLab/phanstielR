@@ -1,5 +1,13 @@
-# A new R bind function that will bind together a list of dataframes or matrices
+#' performs bedtools intersections
+#' A new R bind function that will bind together a list of dataframes or matrices
+#'
+#' Bedtools needs to be in your system PATH
+#'
+#' @param mat_list A list of matrices or data.frames that you would lke to rbind
+#' @param coln A vector of names that you will be used to name the columns of the resulting object
+#' @export
 
+#' @export
 rbind.phan <- function(mat_list, coln=NULL) {
   #checks if the columns are the same length
   if (length(unique(lapply(lapply(mat_list, colnames),function(x) {length(x)}))) != 1) {
