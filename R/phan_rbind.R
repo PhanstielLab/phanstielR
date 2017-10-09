@@ -15,8 +15,8 @@ rbind.phan <- function(mat_list, coln=NULL) {
   
   if (!is.null(coln)) {
     if (length(coln) == length(mat_list[[1]])) {
+      mat_list <- lapply(mat_list,function(x) { colnames(x) <- coln; return(x) })
       df <- do.call(rbind, mat_list)
-      colnames(df) <- coln
       return(df)
     }
     else {
