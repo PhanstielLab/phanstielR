@@ -1,1 +1,3 @@
-exportPattern("^[[:alpha:]]+")
+importFrom(readr, read_tsv)
+
+exportPattern("^[^\\.]")
